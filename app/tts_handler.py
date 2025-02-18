@@ -20,9 +20,9 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # Language default (environment variable)
 
 # Default speed from .env
-DEFAULT_SPEED = int(os.getenv('DEFAULT_SPEED', '4'))
-DEFAULT_VOLUME= int(os.getenv('DEFAULT_VOLUME', '4'))
-DEFAULT_PITCH = int(os.getenv('DEFAULT_PITCH', '4'))
+DEFAULT_SPEED = int(os.getenv('DEFAULT_SPEED', '5'))
+DEFAULT_VOLUME= int(os.getenv('DEFAULT_VOLUME', '5'))
+DEFAULT_PITCH = int(os.getenv('DEFAULT_PITCH', '5'))
 
 # Default output directory for saved files
 DEFAULT_OUTPUT_DIR = os.getenv('TTS_OUTPUT_DIR', 'tts_output')
