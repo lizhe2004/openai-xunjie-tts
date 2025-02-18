@@ -152,7 +152,7 @@ async def _save_audio_file(temp_file_path, text, edge_tts_voice, response_format
     finally:
          asyncio.create_task(_delayed_cleanup(temp_file_path))
 
-async def _generate_audio(api_key,text, voice, response_format, default_speed,emotion):
+async def _generate_audio(api_key,text, voice, response_format, default_speed):
     """Generate TTS audio with dynamic rate and pitch adjustments."""
     logging.info(f"Generating audio for text: '{text[:50]}...', voice: {voice}, format: {response_format}, default_speed: {default_speed}")
 
@@ -167,7 +167,7 @@ async def _generate_audio(api_key,text, voice, response_format, default_speed,em
 
     # Parse the voice string for adjustments
     xunjie_tts_voice, rate, pitch, volume = parse_voice_string(base_voice_name)
-
+    emotion = "neutral"
     if pitch is None:
        pitch =DEFAULT_PITCH
 
@@ -253,7 +253,7 @@ async def _generate_audio(api_key,text, voice, response_format, default_speed,em
             TEMP_FILES.discard(temp_output_file.name)
         raise
 
-def generate_speech(api_key,text, voice, response_format, speed,emotion):
+def generate_speech(api_key,text, voice, response_format, speed):
     """同步版本的 generate_speech"""
     try:
         # 获取当前事件循环
@@ -268,7 +268,7 @@ def generate_speech(api_key,text, voice, response_format, speed,emotion):
         if loop.is_running():
             import concurrent.futures
             with concurrent.futures.ThreadPoolExecutor() as pool:
-                future = pool.submit(lambda: asyncio.run(_generate_audio(api_key,text, voice, response_format, speed,emotion)))
+                future = pool.submit(lambda: asyncio.run(_generate_audio(api_key,text, voice, response_format, speed)))
                 return future.result()
         else:
             # 如果循环没有运行，直接运行
@@ -358,7 +358,7 @@ if __name__ == "__main__":
                 print(f"\n开始测试语音: {voice}")
                 print(f"参数配置: 文本长度={len(text)}, 格式=mp3, 默认语速={DEFAULT_SPEED}")
                 
-                output_file = generate_speech(api_key,text, voice, "mp3", DEFAULT_SPEED,"angry")
+                output_file = generate_speech(api_key,text, voice, "mp3", DEFAULT_SPEED)
                 
                 if output_file:
                     file_size = os.path.getsize(output_file)
