@@ -1,0 +1,6 @@
+flask
+gevent
+python-dotenv
+emoji
+mutagen
+aiohttp
