@@ -1,4 +1,3 @@
-import edge_tts
 import asyncio
 import tempfile
 import subprocess
